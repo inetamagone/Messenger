@@ -10,7 +10,8 @@ import UIKit
 class RegisterViewController: UIViewController {
     
     private let scrollView = UIScrollView()
-    private let stackView = UIStackView()
+    private let verticalStackView = UIStackView()
+    private let horizontalStackView = UIStackView()
     private var imageView = UIImageView()
     private let firstNameField = UITextField()
     private let lastNameField = UITextField()
@@ -35,7 +36,7 @@ class RegisterViewController: UIViewController {
     }
     
     @objc private func didTapChangeImage() {
-        print("Change picture called")
+        presentPhotoActionSheet()
     }
     
     @objc private func didTapRegister() {
@@ -71,11 +72,12 @@ class RegisterViewController: UIViewController {
 private extension RegisterViewController {
     
     func setupUiItems() {
-        title = "Log in"
+        title = "Register"
         view.backgroundColor = .white
         setScrollView()
         setImageView()
-        setStackView()
+        setVerticalStackView()
+        setHorizontalStackView()
         setFirstName()
         setLastName()
         setEmailField()
@@ -86,7 +88,7 @@ private extension RegisterViewController {
     func setScrollView() {
         view.addSubview(scrollView)
         scrollView.addSubview(imageView)
-        scrollView.addSubview(stackView)
+        scrollView.addSubview(verticalStackView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -109,30 +111,46 @@ private extension RegisterViewController {
         imageView.image = UIImage(systemName: "person")
         imageView.tintColor = .gray
         imageView.contentMode = .scaleAspectFit
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderWidth = 2
+        imageView.layer.borderColor = UIColor.gray.cgColor
+        imageView.layer.cornerRadius = 50
     }
     
-    func setStackView() {
-        stackView.addArrangedSubview(firstNameField)
-        stackView.addArrangedSubview(lastNameField)
-        stackView.addArrangedSubview(emailField)
-        stackView.addArrangedSubview(passwordField)
-        stackView.addArrangedSubview(logInButton)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+    func setVerticalStackView() {
+        verticalStackView.addArrangedSubview(horizontalStackView)
+        verticalStackView.addArrangedSubview(emailField)
+        verticalStackView.addArrangedSubview(passwordField)
+        verticalStackView.addArrangedSubview(logInButton)
+        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-            stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            verticalStackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 15),
+            verticalStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
         ])
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        stackView.alignment = .center
-        stackView.spacing = 5
+        verticalStackView.axis = .vertical
+        verticalStackView.distribution = .fillEqually
+        verticalStackView.alignment = .center
+        verticalStackView.spacing = 5
+    }
+    
+    func setHorizontalStackView() {
+        horizontalStackView.addArrangedSubview(firstNameField)
+        horizontalStackView.addArrangedSubview(lastNameField)
+        horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            horizontalStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            horizontalStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -70),
+        ])
+        horizontalStackView.axis = .horizontal
+        horizontalStackView.distribution = .fillEqually
+        horizontalStackView.alignment = .center
+        horizontalStackView.spacing = 5
     }
     
     func setFirstName() {
         firstNameField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             firstNameField.heightAnchor.constraint(equalToConstant: 52),
-            firstNameField.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -70),
         ])
         firstNameField.autocapitalizationType = .none
         firstNameField.autocorrectionType = .no
@@ -150,7 +168,7 @@ private extension RegisterViewController {
         lastNameField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             lastNameField.heightAnchor.constraint(equalToConstant: 52),
-            lastNameField.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -70),
+            //lastNameField.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -70),
         ])
         lastNameField.autocapitalizationType = .none
         lastNameField.autocorrectionType = .no
@@ -233,5 +251,49 @@ extension RegisterViewController: UITextFieldDelegate {
             didTapRegister()
         }
         return true
+    }
+}
+
+extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func presentPhotoActionSheet() {
+        let actionSheet = UIAlertController(title: "Profile Image", message: "Choose how to add an Image", preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "Take a Photo", style: .default, handler: { [ weak self ] _ in self?.presentCamera()
+            
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Choose a Photo", style: .default, handler: {[ weak self ] _ in self?.presentPhotoPicker()
+            
+        }))
+        present(actionSheet, animated: true)
+    }
+    
+    func presentCamera() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+    }
+    
+    func presentPhotoPicker() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        guard let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
+            return
+        }
+        self.imageView.image = selectedImage
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
 }
