@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class RegisterViewController: UIViewController {
     
@@ -54,14 +55,34 @@ class RegisterViewController: UIViewController {
                 !firstName.isEmpty,
               !lastName.isEmpty,
               !email.isEmpty, !password.isEmpty, password.count >= 6 else {
-            alertLoginError()
+            alertLoginError(message: "Please enter a valid information to create a new Account")
             return
         }
-        // Firebase Log in
+        // Firebase Register
+        
+        DatabaseManager.shared.userExists(with: email, completion: { [ weak self ] exists in
+            guard let strongSelf = self else {
+                return
+            }
+            guard !exists else {
+                // user exists
+                strongSelf.alertLoginError(message: "Account with specified email address already exists")
+                return
+            }
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { authResult, error in
+                guard authResult != nil, error == nil else {
+                    print("Error creating user")
+                    return
+                }
+                
+                DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email))
+                strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+            })
+        })
     }
     
-    func alertLoginError() {
-        let alert = UIAlertController(title: "Woops..", message: "Please enter a valid information to create a new Account", preferredStyle: .alert)
+    func alertLoginError(message: String) {
+        let alert = UIAlertController(title: "Woops..", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
@@ -96,7 +117,7 @@ private extension RegisterViewController {
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        scrollView.backgroundColor = .lightGray
+        //scrollView.backgroundColor = .cyan
         scrollView.clipsToBounds = true
     }
     
@@ -108,7 +129,7 @@ private extension RegisterViewController {
             imageView.heightAnchor.constraint(equalToConstant: 100),
             imageView.widthAnchor.constraint(equalToConstant: 100),
         ])
-        imageView.image = UIImage(systemName: "person")
+        imageView.image = UIImage(systemName: "person.circle")
         imageView.tintColor = .gray
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
@@ -159,7 +180,8 @@ private extension RegisterViewController {
         firstNameField.layer.borderWidth = 1
         firstNameField.layer.borderColor = UIColor.black.cgColor
         firstNameField.placeholder = "Your First Name"
-        firstNameField.backgroundColor = .white
+        firstNameField.backgroundColor = .lightGray
+        firstNameField.textColor = .black
         firstNameField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 7, height: 0))
         firstNameField.leftViewMode = .always
     }
@@ -177,7 +199,9 @@ private extension RegisterViewController {
         lastNameField.layer.borderWidth = 1
         lastNameField.layer.borderColor = UIColor.black.cgColor
         lastNameField.placeholder = "Your Last Name"
-        lastNameField.backgroundColor = .white
+        lastNameField.backgroundColor = .lightGray
+        lastNameField.backgroundColor = .lightGray
+        lastNameField.textColor = .black
         lastNameField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 7, height: 0))
         lastNameField.leftViewMode = .always
     }
@@ -195,7 +219,9 @@ private extension RegisterViewController {
         emailField.layer.borderWidth = 1
         emailField.layer.borderColor = UIColor.black.cgColor
         emailField.placeholder = "E-mail adress, ex. anthony@abc.com"
-        emailField.backgroundColor = .white
+        emailField.backgroundColor = .lightGray
+        emailField.backgroundColor = .lightGray
+        emailField.textColor = .black
         emailField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 7, height: 0))
         emailField.leftViewMode = .always
     }
@@ -213,7 +239,9 @@ private extension RegisterViewController {
         passwordField.layer.borderWidth = 1
         passwordField.layer.borderColor = UIColor.black.cgColor
         passwordField.placeholder = "Password..."
-        passwordField.backgroundColor = .white
+        passwordField.backgroundColor = .lightGray
+        passwordField.backgroundColor = .lightGray
+        passwordField.textColor = .black
         passwordField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 7, height: 0))
         passwordField.leftViewMode = .always
         passwordField.isSecureTextEntry = true

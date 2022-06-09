@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
@@ -40,6 +41,19 @@ class LoginViewController: UIViewController {
             return
         }
         // Firebase Log in
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [ weak self ] authResult, error in
+            guard let strongSelf = self else {
+                return
+            }
+            guard let result = authResult, error == nil else {
+                print("Failed to sign in user: \(email)")
+                return
+            }
+            
+            let user = result.user
+            print("Logged in user: \(user)")
+            strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+        })
     }
     
     @objc private func didTapRegister() {
@@ -82,7 +96,7 @@ private extension LoginViewController {
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        scrollView.backgroundColor = .lightGray
+        //scrollView.backgroundColor = .green
         scrollView.clipsToBounds = true
     }
     
@@ -99,7 +113,6 @@ private extension LoginViewController {
     }
     
     func setStackView() {
-        //stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(emailField)
         stackView.addArrangedSubview(passwordField)
         stackView.addArrangedSubview(logInButton)
@@ -128,7 +141,8 @@ private extension LoginViewController {
         emailField.layer.borderWidth = 1
         emailField.layer.borderColor = UIColor.black.cgColor
         emailField.placeholder = "E-mail adress, ex. anthony@abc.com"
-        emailField.backgroundColor = .white
+        emailField.backgroundColor = .lightGray
+        emailField.textColor = .black
         emailField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 7, height: 0))
         emailField.leftViewMode = .always
     }
@@ -146,7 +160,8 @@ private extension LoginViewController {
         passwordField.layer.borderWidth = 1
         passwordField.layer.borderColor = UIColor.black.cgColor
         passwordField.placeholder = "Password..."
-        passwordField.backgroundColor = .white
+        passwordField.backgroundColor = .lightGray
+        passwordField.textColor = .black
         passwordField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 7, height: 0))
         passwordField.leftViewMode = .always
         passwordField.isSecureTextEntry = true
