@@ -15,13 +15,31 @@ class LoginViewController: UIViewController {
     private let emailField = UITextField()
     private let passwordField = UITextField()
     private let logInButton = UIButton()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register", style: .done, target: self, action: #selector(didTapRegister))
         
+        logInButton.addTarget(self, action: #selector(didTapLogin), for: .touchUpInside)
+        
+        emailField.delegate = self
+        passwordField.delegate = self
+        
         setupUiItems()
+    }
+    
+    @objc private func didTapLogin() {
+        // Take away the keyboard
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+        
+        guard let email = emailField.text, let password = passwordField.text,
+              !email.isEmpty, !password.isEmpty, password.count >= 6 else {
+            alertLoginError()
+            return
+        }
+        // Firebase Log in
     }
     
     @objc private func didTapRegister() {
@@ -29,6 +47,12 @@ class LoginViewController: UIViewController {
         vc.title = "Create Account"
         navigationController?.pushViewController(vc, animated: true)
         
+    }
+    
+    func alertLoginError() {
+        let alert = UIAlertController(title: "Woops..", message: "Please enter a valid e-mail and password", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        present(alert, animated: true)
     }
     
 }
@@ -40,8 +64,8 @@ private extension LoginViewController {
         title = "Log in"
         view.backgroundColor = .white
         setScrollView()
-        setStackView()
         setImageView()
+        setStackView()
         setEmailField()
         setPasswordField()
         setLogInButton()
@@ -49,6 +73,7 @@ private extension LoginViewController {
     
     func setScrollView() {
         view.addSubview(scrollView)
+        scrollView.addSubview(imageView)
         scrollView.addSubview(stackView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -61,31 +86,34 @@ private extension LoginViewController {
         scrollView.clipsToBounds = true
     }
     
+    func setImageView() {
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            imageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
+            imageView.heightAnchor.constraint(equalToConstant: 130),
+            imageView.widthAnchor.constraint(equalToConstant: 130),
+        ])
+        imageView.image = UIImage(named: "logo")
+        imageView.contentMode = .scaleAspectFit
+    }
+    
     func setStackView() {
-        stackView.addArrangedSubview(imageView)
+        //stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(emailField)
         stackView.addArrangedSubview(passwordField)
         stackView.addArrangedSubview(logInButton)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 40),
+            stackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 15),
             stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
         ])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.alignment = .center
-        stackView.spacing = 30
+        stackView.spacing = 10
     }
     
-    func setImageView() {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            imageView.heightAnchor.constraint(equalToConstant: 90),
-            imageView.widthAnchor.constraint(equalToConstant: 90),
-        ])
-        imageView.image = UIImage(named: "logo")
-        imageView.contentMode = .scaleAspectFit
-    }
     
     func setEmailField() {
         emailField.translatesAutoresizingMaskIntoConstraints = false
@@ -136,5 +164,18 @@ private extension LoginViewController {
         logInButton.layer.cornerRadius = 12
         logInButton.layer.masksToBounds = true
         logInButton.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == emailField {
+            passwordField.becomeFirstResponder()
+        } else if textField == passwordField {
+            didTapLogin()
+        }
+        return true
     }
 }
