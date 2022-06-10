@@ -6,24 +6,87 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class NewConversationViewController: UIViewController {
 
+    private let spinner = JGProgressHUD()
+    private let searchBar = UISearchBar()
+    private let tableView = UITableView()
+    private let noResultsLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        searchBar.delegate = self
+        view.backgroundColor = .white
+        
+        setupUiItems()
+        // Putting searchBar on the top of the screen
+        navigationController?.navigationBar.topItem?.titleView = searchBar
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel",
+                                                            style: .done,
+                                                            target: self,
+                                                            action: #selector(dismissConversation))
+        // Invoke keyboard on searchBar
+        searchBar.becomeFirstResponder()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "newConversationCell")
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc private func dismissConversation() {
+        dismiss(animated: true, completion: nil)
     }
-    */
 
+}
+
+extension NewConversationViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+    }
+}
+
+extension NewConversationViewController {
+    
+    func setupUiItems() {
+        setupSpinner()
+        setTableViewUi()
+        setupSearchBar()
+        setLabel()
+    }
+    
+    func setupSpinner() {
+        spinner.style = .dark
+    }
+    
+    func setTableViewUi() {
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+        tableView.isHidden = true
+    }
+    
+    func setupSearchBar() {
+        searchBar.placeholder = "Search for users..."
+    }
+    
+    func setLabel() {
+        view.addSubview(noResultsLabel)
+        noResultsLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            noResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            noResultsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            noResultsLabel.heightAnchor.constraint(equalToConstant: 60),
+            noResultsLabel.widthAnchor.constraint(equalToConstant: 200),
+        ])
+        noResultsLabel.text = "No Search Results"
+        noResultsLabel.textAlignment = .center
+        noResultsLabel.textColor = .green
+        noResultsLabel.font = .systemFont(ofSize: 21, weight: .medium)
+        noResultsLabel.isHidden = true
+    }
 }

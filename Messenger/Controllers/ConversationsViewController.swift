@@ -7,12 +7,11 @@
 
 import UIKit
 import FirebaseAuth
-import SwiftUI
 import JGProgressHUD
 
 class ConversationsViewController: UIViewController {
 
-    private let spinner = JGProgressHUD(style: .dark)
+    private let spinner = JGProgressHUD()
     private let tableView = UITableView()
     private let noConversationsLabel = UILabel()
 
@@ -20,12 +19,20 @@ class ConversationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //view.backgroundColor = .red
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(didTapComposeButton))
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "conversationCell")
         setupUiItems()
         setupTableView()
         getConversations()
     }
+    
+    @objc private func didTapComposeButton() {
+        let vc = NewConversationViewController()
+        let navVc = UINavigationController(rootViewController: vc)
+        present(navVc, animated: true)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         validateAuth()
@@ -61,6 +68,8 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "conversationCell", for: indexPath)
         cell.textLabel?.text = "Hello World"
+        // An arrow on the side
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     
@@ -77,8 +86,13 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
 extension ConversationsViewController {
     
     func setupUiItems() {
+        setupSpinner()
         setTableViewUi()
         setLabel()
+    }
+    
+    func setupSpinner() {
+        spinner.style = .dark
     }
     
     func setTableViewUi() {

@@ -11,7 +11,7 @@ import JGProgressHUD
 
 class RegisterViewController: UIViewController {
     
-    private let spinner = JGProgressHUD(style: .dark)
+    private let spinner = JGProgressHUD()
     private let scrollView = UIScrollView()
     private let verticalStackView = UIStackView()
     private let horizontalStackView = UIStackView()
@@ -103,6 +103,7 @@ private extension RegisterViewController {
     func setupUiItems() {
         title = "Register"
         view.backgroundColor = .white
+        setupSpinner()
         setScrollView()
         setImageView()
         setVerticalStackView()
@@ -112,6 +113,10 @@ private extension RegisterViewController {
         setEmailField()
         setPasswordField()
         setLogInButton()
+    }
+    
+    func setupSpinner() {
+        spinner.style = .dark
     }
     
     func setScrollView() {

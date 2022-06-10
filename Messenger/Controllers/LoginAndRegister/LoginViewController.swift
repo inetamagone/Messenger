@@ -11,7 +11,7 @@ import JGProgressHUD
 
 class LoginViewController: UIViewController {
     
-    private let spinner = JGProgressHUD(style: .dark)
+    private let spinner = JGProgressHUD()
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
     private let imageView = UIImageView()
@@ -85,12 +85,17 @@ private extension LoginViewController {
     func setupUiItems() {
         title = "Log in"
         view.backgroundColor = .white
+        setupSpinner()
         setScrollView()
         setImageView()
         setStackView()
         setEmailField()
         setPasswordField()
         setLogInButton()
+    }
+    
+    func setupSpinner() {
+        spinner.style = .dark
     }
     
     func setScrollView() {
