@@ -10,10 +10,14 @@ import FirebaseAuth
 
 class ConversationsViewController: UIViewController {
 
+    private let tableView = UITableView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //view.backgroundColor = .red
         
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "conversationCell")
+        setupUiItems()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -30,5 +34,19 @@ class ConversationsViewController: UIViewController {
     }
 
 
+}
+
+extension ConversationsViewController {
+    
+    func setupUiItems() {
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+    }
 }
 
