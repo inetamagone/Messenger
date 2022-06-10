@@ -21,6 +21,7 @@
 		FCC7B0D928509E0200640BAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCC7B0D728509E0200640BAB /* Main.storyboard */; };
 		FCC7B0DB28509E1600640BAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCC7B0DA28509E1600640BAB /* Assets.xcassets */; };
 		FCC7B0DE28509E1600640BAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCC7B0DC28509E1600640BAB /* LaunchScreen.storyboard */; };
+		FCD337BE285328C800357047 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD337BD285328C800357047 /* ChatViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		FCC7B0DA28509E1600640BAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FCC7B0DD28509E1600640BAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FCC7B0DF28509E1600640BAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FCD337BD285328C800357047 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		FD9FFE43E8BCFFD849B0D6C2 /* Pods-Messenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.release.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,6 +83,7 @@
 				FC7607A92850C1D200E6923E /* PhotoViewerViewController.swift */,
 				FC7607AB2850C1F900E6923E /* NewConversationViewController.swift */,
 				FC7607AD2850C20C00E6923E /* ProfileViewController.swift */,
+				FCD337BD285328C800357047 /* ChatViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				FCC7B0D428509E0200640BAB /* SceneDelegate.swift in Sources */,
 				FC7607AE2850C20C00E6923E /* ProfileViewController.swift in Sources */,
 				FC7607AA2850C1D200E6923E /* PhotoViewerViewController.swift in Sources */,
+				FCD337BE285328C800357047 /* ChatViewController.swift in Sources */,
 				FC56A8D628522932003E59F8 /* DatabaseManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

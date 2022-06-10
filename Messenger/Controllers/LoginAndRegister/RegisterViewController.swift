@@ -7,13 +7,15 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class RegisterViewController: UIViewController {
     
+    private let spinner = JGProgressHUD(style: .dark)
     private let scrollView = UIScrollView()
     private let verticalStackView = UIStackView()
     private let horizontalStackView = UIStackView()
-    private var imageView = UIImageView()
+    private let imageView = UIImageView()
     private let firstNameField = UITextField()
     private let lastNameField = UITextField()
     private let emailField = UITextField()
@@ -58,12 +60,18 @@ class RegisterViewController: UIViewController {
             alertLoginError(message: "Please enter a valid information to create a new Account")
             return
         }
-        // Firebase Register
         
+        spinner.show(in: view)
+        // Firebase Register
         DatabaseManager.shared.userExists(with: email, completion: { [ weak self ] exists in
             guard let strongSelf = self else {
                 return
             }
+            
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss()
+            }
+            
             guard !exists else {
                 // user exists
                 strongSelf.alertLoginError(message: "Account with specified email address already exists")
