@@ -22,6 +22,7 @@
 		FCC7B0DB28509E1600640BAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCC7B0DA28509E1600640BAB /* Assets.xcassets */; };
 		FCC7B0DE28509E1600640BAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCC7B0DC28509E1600640BAB /* LaunchScreen.storyboard */; };
 		FCD337BE285328C800357047 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD337BD285328C800357047 /* ChatViewController.swift */; };
+		FCD337C02853454100357047 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD337BF2853454100357047 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		FCC7B0DD28509E1600640BAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FCC7B0DF28509E1600640BAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FCD337BD285328C800357047 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		FCD337BF2853454100357047 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		FD9FFE43E8BCFFD849B0D6C2 /* Pods-Messenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.release.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,6 +119,7 @@
 				FCC7B0D128509E0200640BAB /* AppDelegate.swift */,
 				FCC7B0D328509E0200640BAB /* SceneDelegate.swift */,
 				FC56A8D528522932003E59F8 /* DatabaseManager.swift */,
+				FCD337BF2853454100357047 /* StorageManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 			files = (
 				FC7607A62850C1A300E6923E /* LoginViewController.swift in Sources */,
 				FC7607AC2850C1F900E6923E /* NewConversationViewController.swift in Sources */,
+				FCD337C02853454100357047 /* StorageManager.swift in Sources */,
 				FC7607A82850C1B300E6923E /* RegisterViewController.swift in Sources */,
 				FCC7B0D628509E0200640BAB /* ConversationsViewController.swift in Sources */,
 				FCC7B0D228509E0200640BAB /* AppDelegate.swift in Sources */,
