@@ -68,6 +68,7 @@ extension NewConversationViewController: UISearchBarDelegate {
             DatabaseManager.shared.getAllUsers(completion: { [ weak self ] result in
                 switch result {
                 case .success(let usersCollection):
+                    self?.hasFetched = true
                     self?.users = usersCollection
                     self?.filterUsers(with: query)
                 case .failure(let error):
@@ -82,6 +83,7 @@ extension NewConversationViewController: UISearchBarDelegate {
         guard hasFetched else {
             return
         }
+        self.spinner.dismiss()
         
         let results: [[String: String]] = self.users.filter({
             guard let name = $0["name"]?.lowercased() else {
