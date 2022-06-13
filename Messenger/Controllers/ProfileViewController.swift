@@ -11,9 +11,9 @@ import FirebaseAuth
 class ProfileViewController: UIViewController {
     
     private let tableView = UITableView()
-//    private var headerView: UIView! = nil
-//    private var imageView: UIImageView! = nil
-//
+    private var headerView: UIView! = nil
+    private var imageView: UIImageView! = nil
+    
     let data = ["Log Out"]
     
     override func viewDidLoad() {
@@ -24,7 +24,7 @@ class ProfileViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableHeaderView = createTableHeader()
-        setupUiItems()
+        setupTableView()
     }
     
     func createTableHeader() -> UIView? {
@@ -34,24 +34,16 @@ class ProfileViewController: UIViewController {
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
         let filename = safeEmail + "_profile_picture.png"
         let path = "images/"+filename
-        //setHeader()
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: 600, height: 300))
-        headerView.backgroundColor = .link
         
-        let imageView = UIImageView(frame: CGRect(x: 10, y: 75, width: 150, height: 150))
-        imageView.backgroundColor = .white
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.borderColor = UIColor.white.cgColor
-        imageView.layer.borderWidth = 3
-        imageView.layer.masksToBounds = true
-        
+        headerView = setHeaderUI()
+        imageView = setImageUI()
         headerView.addSubview(imageView)
         
-        StorageManager.shared.downloadUrl(for: path, completion: { [ weak self] result in
+        StorageManager.shared.downloadUrl(for: path, completion: { [ weak self ] result in
             
             switch result {
             case .success(let url):
-                self?.downloadImage(imageView: imageView, url: url)
+                self?.downloadImage(imageView: (self?.imageView)!, url: url)
             case .failure(let error):
                 print("Failed to get download url: \(error)")
             }
@@ -118,7 +110,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ProfileViewController {
     
-    func setupUiItems() {
+    func setupTableView() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -129,37 +121,20 @@ extension ProfileViewController {
         ])
     }
     
-    // MARK: - Set NSL constraints correctly !!
+    func setHeaderUI() -> UIView {
+        headerView = UIView(frame: CGRect(x: 0, y: 0, width: 600, height: 300))
+        headerView.backgroundColor = .link
+        return headerView
+    }
     
-//    func setHeader() {
-        
-//        headerView = UIView(frame: CGRect(x: 0, y: 0, width: 600, height: 300))
-//        headerView.backgroundColor = .link
-//
-//        imageView = UIImageView(frame: CGRect(x: 10, y: 75, width: 150, height: 150))
-//        imageView.backgroundColor = .white
-//        imageView.contentMode = .scaleAspectFill
-//        imageView.layer.borderColor = UIColor.white.cgColor
-//        imageView.layer.borderWidth = 3
-//        imageView.layer.masksToBounds = true
-//
-//        headerView.addSubview(imageView)
-        
-        //        headerView.translatesAutoresizingMaskIntoConstraints = false
-        //        NSLayoutConstraint.activate([
-        //            headerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        //            headerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        //            headerView.widthAnchor.constraint(equalToConstant: 600),
-        //            headerView.heightAnchor.constraint(equalToConstant: 300),
-        //        ])
-        
-        //        imageView.translatesAutoresizingMaskIntoConstraints = false
-        //        NSLayoutConstraint.activate([
-        //            imageView.widthAnchor.constraint(equalToConstant: 150),
-        //            imageView.heightAnchor.constraint(equalToConstant: 150),
-        //            imageView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 10),
-        //            imageView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10),
-        //        ])
-        
-//    }
+    func setImageUI() -> UIImageView {
+        imageView = UIImageView(frame: CGRect(x: (UIScreen.main.bounds.width-150) / 2, y: 75, width: 150, height: 150))
+        imageView.backgroundColor = .white
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.borderWidth = 3
+        imageView.layer.masksToBounds = true
+        return imageView
+    }
+    
 }
