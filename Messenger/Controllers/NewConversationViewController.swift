@@ -11,12 +11,20 @@ import JGProgressHUD
 class NewConversationViewController: UIViewController {
 
     private let spinner = JGProgressHUD()
+    
+    private var users = [[String: String]]()
+    private var results = [[String: String]]()
+    
+    private var hasFetched = false
+    
     private let searchBar = UISearchBar()
     private let tableView = UITableView()
     private let noResultsLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
         searchBar.delegate = self
         view.backgroundColor = .white
         
@@ -35,13 +43,87 @@ class NewConversationViewController: UIViewController {
     @objc private func dismissConversation() {
         dismiss(animated: true, completion: nil)
     }
-
 }
 
 extension NewConversationViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let sarchQuery = searchBar.text, !sarchQuery.replacingOccurrences(of: " ", with: "").isEmpty else {
+            return
+        }
         
+        results.removeAll()
+        spinner.show(in: view)
+        
+        self.searchUsers(query: sarchQuery)
+    }
+    
+    func searchUsers(query: String) {
+        // check if array has Firebase results
+        if hasFetched {
+            // if yes - filter
+            filterUsers(with: query)
+        } else {
+            // if not - fetch then filter
+            DatabaseManager.shared.getAllUsers(completion: { [ weak self ] result in
+                switch result {
+                case .success(let usersCollection):
+                    self?.users = usersCollection
+                    self?.filterUsers(with: query)
+                case .failure(let error):
+                    print("Failed to get users: \(error)")
+                }
+            })
+        }
+    }
+    
+    func filterUsers(with term: String) {
+        // update UI
+        guard hasFetched else {
+            return
+        }
+        
+        let results: [[String: String]] = self.users.filter({
+            guard let name = $0["name"]?.lowercased() else {
+                return false
+            }
+            
+            return name.hasPrefix(term.lowercased())
+        })
+        
+        self.results = results
+        
+        updateUI()
+    }
+    
+    func updateUI() {
+        if results.isEmpty {
+            self.noResultsLabel.isHidden = false
+            self.tableView.isHidden = true
+        } else {
+            self.noResultsLabel.isHidden = true
+            self.tableView.isHidden = false
+            self.tableView.reloadData()
+        }
+    }
+    
+}
+
+extension NewConversationViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return results.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "newConversationCell", for: indexPath)
+        cell.textLabel?.text = results[indexPath.row]["name"]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        // start conversation
     }
 }
 

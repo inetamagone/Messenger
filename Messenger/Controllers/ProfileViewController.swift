@@ -123,7 +123,7 @@ extension ProfileViewController {
     
     func setHeaderUI() -> UIView {
         headerView = UIView(frame: CGRect(x: 0, y: 0, width: 600, height: 300))
-        headerView.backgroundColor = .link
+        headerView.backgroundColor = .white
         return headerView
     }
     
@@ -134,6 +134,7 @@ extension ProfileViewController {
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.borderWidth = 3
         imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 75
         return imageView
     }
     
