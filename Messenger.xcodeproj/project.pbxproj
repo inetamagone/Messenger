@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8A106B43AB058427F322F037 /* Pods_Messenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80E98D3145F130D75378D7D9 /* Pods_Messenger.framework */; };
+		FC1C7FFF28587B37005AA13A /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1C7FFE28587B37005AA13A /* ConversationTableViewCell.swift */; };
 		FC56A8D4285202D8003E59F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC56A8D3285202D8003E59F8 /* GoogleService-Info.plist */; };
 		FC56A8D628522932003E59F8 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC56A8D528522932003E59F8 /* DatabaseManager.swift */; };
 		FC7607A62850C1A300E6923E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7607A52850C1A300E6923E /* LoginViewController.swift */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		80E98D3145F130D75378D7D9 /* Pods_Messenger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Messenger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99A8386BC5AB8D81166E925F /* Pods-Messenger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.debug.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.debug.xcconfig"; sourceTree = "<group>"; };
+		FC1C7FFE28587B37005AA13A /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		FC56A8D3285202D8003E59F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FC56A8D528522932003E59F8 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		FC7607A52850C1A300E6923E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				FCC7B0DA28509E1600640BAB /* Assets.xcassets */,
 				FC7607A42850BF3300E6923E /* Storyboards */,
+				FC1C7FFE28587B37005AA13A /* ConversationTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				FCC7B0D228509E0200640BAB /* AppDelegate.swift in Sources */,
 				FCC7B0D428509E0200640BAB /* SceneDelegate.swift in Sources */,
 				FC7607AE2850C20C00E6923E /* ProfileViewController.swift in Sources */,
+				FC1C7FFF28587B37005AA13A /* ConversationTableViewCell.swift in Sources */,
 				FC7607AA2850C1D200E6923E /* PhotoViewerViewController.swift in Sources */,
 				FCD337BE285328C800357047 /* ChatViewController.swift in Sources */,
 				FC56A8D628522932003E59F8 /* DatabaseManager.swift in Sources */,
