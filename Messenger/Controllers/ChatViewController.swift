@@ -18,6 +18,34 @@ struct Message: MessageType {
     var kind: MessageKind
 }
 
+extension MessageKind {
+    var messageKindString: String {
+        switch self {
+            
+        case .text(_):
+            return "text"
+        case .attributedText(_):
+            return "attributed_text"
+        case .photo(_):
+            return "photo"
+        case .video(_):
+            return "video"
+        case .location(_):
+            return "location"
+        case .emoji(_):
+            return "emoji"
+        case .audio(_):
+            return "audio"
+        case .contact(_):
+            return "contact"
+        case .linkPreview(_):
+            return "link_preview"
+        case .custom(_):
+            return "custom"
+        }
+    }
+}
+
 struct Sender: SenderType {
     var photoUrl: String
     var senderId: String
@@ -54,22 +82,6 @@ class ChatViewController: MessagesViewController {
         super.viewDidLoad()
         view.backgroundColor = .purple
         Self.dateFormatter = setDateFormatter()
-        //        guard let email = UserDefaults.standard.value(forKey: "email") else {
-        //            return nil
-        //        }
-        //        testSender = Sender(photoUrl: "",
-        //                       senderId: email,
-        //                       displayName: "Joe Smith")
-        
-        
-        //        messages.append(Message(sender: testSender,
-        //                                messageId: "2",
-        //                                sentDate: Date(),
-        //                                kind: .text("Hello Message")))
-        //        messages.append(Message(sender: testSender,
-        //                                messageId: "1",
-        //                                sentDate: Date(),
-        //                                kind: .text("Hello Message, Hello Message, Hello Message")))
         
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
@@ -134,12 +146,13 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     
     private func createMessageId() -> String? {
         // random string from date, otherUserEmail and senderEmail, random Int
-        guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") else {
+        guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") as? String else {
             return nil
         }
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: currentUserEmail)
         
         let dateString = Self.dateFormatter.string(from: Date())
-        let newId = "\(otherUserEmail)_\(currentUserEmail)_\(dateString)"
+        let newId = "\(otherUserEmail)_\(safeEmail)_\(dateString)"
         print("Created messageId: \(newId)")
         return newId
     }
