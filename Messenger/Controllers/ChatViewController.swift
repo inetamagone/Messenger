@@ -80,7 +80,6 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .purple
         Self.dateFormatter = setDateFormatter()
         
         messagesCollectionView.messagesDataSource = self

@@ -28,7 +28,7 @@ class ConversationsViewController: UIViewController {
     
     private var conversations = [Conversation]()
     
-    private let tableView = UITableView()
+    private let myTableView = UITableView()
     private let noConversationsLabel = UILabel()
 
     
@@ -37,10 +37,11 @@ class ConversationsViewController: UIViewController {
         //view.backgroundColor = .red
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(didTapComposeButton))
         
-        tableView.register(ConversationTableViewCell.self, forCellReuseIdentifier: ConversationTableViewCell.reuseId)
+        myTableView.register(ConversationTableViewCell.self, forCellReuseIdentifier: ConversationTableViewCell.reuseId)
         setupUiItems()
         setupTableView()
         getConversations()
+        startListeningForConversations()
     }
     
     // Update the tableView when new conversation added
@@ -55,12 +56,14 @@ class ConversationsViewController: UIViewController {
             case .success(let conversations):
                 print("Success for conversation models")
                 guard !conversations.isEmpty else {
+                    print("Conversations are empty")
                     return
                 }
+                print("conversations: \(conversations)")
                 self?.conversations = conversations
                 
                 DispatchQueue.main.async {
-                    self?.tableView.reloadData()
+                    self?.myTableView.reloadData()
                 }
             case .failure(let error):
                 print("Failed to get conversations: \(error)")
@@ -105,12 +108,12 @@ class ConversationsViewController: UIViewController {
     }
     
     private func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
+        myTableView.delegate = self
+        myTableView.dataSource = self
     }
     
     private func getConversations() {
-        tableView.isHidden = false
+        myTableView.isHidden = false
     }
 
 
@@ -119,12 +122,13 @@ class ConversationsViewController: UIViewController {
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("conversations.count: \(conversations.count)")
         return conversations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = conversations[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: ConversationTableViewCell.reuseId, for: indexPath) as! ConversationTableViewCell
+        guard let cell = myTableView.dequeueReusableCell(withIdentifier: ConversationTableViewCell.reuseId, for: indexPath) as? ConversationTableViewCell else {return .init()}
         cell.configure(with: model)
         return cell
     }
@@ -147,6 +151,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
 extension ConversationsViewController {
     
     func setupUiItems() {
+        print("ConversationsViewController: setupUiItems()")
         setupSpinner()
         setTableViewUi()
         setLabel()
@@ -157,16 +162,18 @@ extension ConversationsViewController {
     }
     
     func setTableViewUi() {
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        print("ConversationsViewController: setTableViewUi()")
+        view.addSubview(myTableView)
+        myTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            myTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            myTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            myTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            myTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
         // Don't show if no conversations
-        tableView.isHidden = true
+        myTableView.isHidden = true
+        myTableView.backgroundColor = .purple
     }
     
     func setLabel() {
