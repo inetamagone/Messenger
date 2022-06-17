@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseDatabase
+import MessageKit
 
 final class DatabaseManager {
     
@@ -261,31 +262,35 @@ extension DatabaseManager {
     /// Gets and returns all conversations for the user with an email
     public func getAllConversations(for email: String, completion: @escaping (Result<[Conversation], Error>) -> Void) {
         database.child("\(email)/conversations").observe(.value, with: { snapshot in
+            
             guard let value = snapshot.value as? [[String: Any]] else {
                 completion(.failure(DatabaseError.failedToFetch))
+                print("DatabaseError.failedToFetch")
                 return
             }
-            
+            print("Value: \(value)")
             let conversations: [Conversation] = value.compactMap({ dictionary in
                 guard let conversationId = dictionary["id"] as? String,
-                      let name = dictionary["name"] as? String,
-                      let otherUserEmail = dictionary["other_user_email"] as? String,
-                      let latestMessage = dictionary["latest_message"] as? [String: Any],
-                      let date = latestMessage["date"] as? String,
-                      let message = latestMessage["message"] as? String,
-                      let isRead = latestMessage["is_read"] as? Bool else {
+                    let name = dictionary["name"] as? String,
+                    let otherUserEmail = dictionary["other_user_email"] as? String,
+                    let lastMessage = dictionary["last_message"] as? [String: Any],
+                    let date = lastMessage["date"] as? String,
+                    let message = lastMessage["message"] as? String,
+                    let isRead = lastMessage["is_read"] as? Bool else {
                         return nil
                 }
-                
-                let latestMessageObject = LatestMessage(date: date,
-                                                        text: message,
-                                                        isRead: isRead)
+                let lastMessageObject = LatestMessage(date: date,
+                                                         text: message,
+                                                         isRead: isRead)
+                print("conversationId: \(conversationId)")
                 return Conversation(id: conversationId,
                                     name: name,
                                     otherUserEmail: otherUserEmail,
-                                    latestMessage: latestMessageObject)
+                                    latestMessage: lastMessageObject)
+                
             })
             completion(.success(conversations))
+            print("DB Manager, conversations: \(conversations)")
         })
     }
     /// All messages of one conversation

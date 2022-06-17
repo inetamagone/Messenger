@@ -30,17 +30,14 @@ class ConversationsViewController: UIViewController {
     
     private let myTableView = UITableView()
     private let noConversationsLabel = UILabel()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //view.backgroundColor = .red
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(didTapComposeButton))
-        
-        myTableView.register(ConversationTableViewCell.self, forCellReuseIdentifier: ConversationTableViewCell.reuseId)
         setupUiItems()
-        setupTableView()
-        getConversations()
+        myTableView.delegate = self
+        myTableView.dataSource = self
         startListeningForConversations()
     }
     
@@ -59,7 +56,7 @@ class ConversationsViewController: UIViewController {
                     print("Conversations are empty")
                     return
                 }
-                print("conversations: \(conversations)")
+                //print("conversations: \(conversations)")
                 self?.conversations = conversations
                 
                 DispatchQueue.main.async {
@@ -75,6 +72,7 @@ class ConversationsViewController: UIViewController {
         let vc = NewConversationViewController()
         vc.completion = { [ weak self ] result in
             print("\(result)")
+            
             self?.createNewConversation(result: result)
         }
         let navVc = UINavigationController(rootViewController: vc)
@@ -107,15 +105,9 @@ class ConversationsViewController: UIViewController {
         }
     }
     
-    private func setupTableView() {
-        myTableView.delegate = self
-        myTableView.dataSource = self
-    }
-    
     private func getConversations() {
         myTableView.isHidden = false
     }
-
 
 }
 
@@ -123,6 +115,13 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("conversations.count: \(conversations.count)")
+        if conversations.count == 0 {
+            myTableView.isHidden = true
+            noConversationsLabel.isHidden = false
+        } else {
+            myTableView.isHidden = false
+            noConversationsLabel.isHidden = true
+        }
         return conversations.count
     }
     
@@ -151,7 +150,6 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
 extension ConversationsViewController {
     
     func setupUiItems() {
-        print("ConversationsViewController: setupUiItems()")
         setupSpinner()
         setTableViewUi()
         setLabel()
@@ -162,7 +160,6 @@ extension ConversationsViewController {
     }
     
     func setTableViewUi() {
-        print("ConversationsViewController: setTableViewUi()")
         view.addSubview(myTableView)
         myTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -174,6 +171,7 @@ extension ConversationsViewController {
         // Don't show if no conversations
         myTableView.isHidden = true
         myTableView.backgroundColor = .purple
+        myTableView.register(ConversationTableViewCell.self, forCellReuseIdentifier: ConversationTableViewCell.reuseId)
     }
     
     func setLabel() {

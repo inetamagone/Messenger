@@ -161,7 +161,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 extension ChatViewController {
     
     func setDateFormatter() -> DateFormatter {
-        var formatter = DateFormatter()
+        let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .long
         formatter.locale = .current

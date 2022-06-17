@@ -11,19 +11,18 @@ import FirebaseAuth
 class ProfileViewController: UIViewController {
     
     private let tableView = UITableView()
-    private var headerView: UIView! = nil
-    private var imageView: UIImageView! = nil
+    private var headerView: UIView!
+    private var imageView: UIImageView!
     
     let data = ["Log Out"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.tableHeaderView = createTableHeader()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.tableHeaderView = createTableHeader()
         setupTableView()
     }
     
@@ -34,9 +33,8 @@ class ProfileViewController: UIViewController {
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
         let filename = safeEmail + "_profile_picture.png"
         let path = "images/"+filename
-        
-        headerView = setHeaderUI()
         imageView = setImageUI()
+        headerView = setHeaderUI()
         headerView.addSubview(imageView)
         
         StorageManager.shared.downloadUrl(for: path, completion: { [ weak self ] result in
