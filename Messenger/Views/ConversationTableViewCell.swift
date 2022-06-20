@@ -51,7 +51,7 @@ class ConversationTableViewCell: UITableViewCell {
 extension ConversationTableViewCell {
     
     func setupUiItems() {
-        contentView.backgroundColor = .green
+        //contentView.backgroundColor = .green
         setupImage()
         setupNameLabel()
         setupMessageLabel()
@@ -75,28 +75,28 @@ extension ConversationTableViewCell {
         contentView.addSubview(userNameLabel)
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            userNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            userNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 124),
             userNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             userNameLabel.heightAnchor.constraint(equalToConstant: 50),
             userNameLabel.widthAnchor.constraint(equalToConstant: 150),
         ])
         userNameLabel.font = .systemFont(ofSize: 21, weight: .semibold)
         //userNameLabel.text = "Test username"
-        userNameLabel.backgroundColor = .yellow
+        //userNameLabel.backgroundColor = .yellow
     }
     
     func setupMessageLabel() {
         contentView.addSubview(userMessageLabel)
         userMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            userMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            userMessageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 124),
             userMessageLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 5),
             userMessageLabel.heightAnchor.constraint(equalToConstant: 50),
             userMessageLabel.widthAnchor.constraint(equalToConstant: 150),
         ])
         userMessageLabel.font = .systemFont(ofSize: 19, weight: .regular)
         userMessageLabel.numberOfLines = 0
-        userMessageLabel.backgroundColor = .gray
+        //userMessageLabel.backgroundColor = .gray
     }
     
 }

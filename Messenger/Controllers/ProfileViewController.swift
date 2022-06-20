@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import SDWebImage
 
 class ProfileViewController: UIViewController {
     

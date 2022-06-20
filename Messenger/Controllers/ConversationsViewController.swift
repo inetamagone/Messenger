@@ -33,7 +33,6 @@ class ConversationsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //view.backgroundColor = .red
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(didTapComposeButton))
         setupUiItems()
         myTableView.delegate = self
@@ -170,7 +169,7 @@ extension ConversationsViewController {
         ])
         // Don't show if no conversations
         myTableView.isHidden = true
-        myTableView.backgroundColor = .purple
+        //myTableView.backgroundColor = .purple
         myTableView.register(ConversationTableViewCell.self, forCellReuseIdentifier: ConversationTableViewCell.reuseId)
     }
     
