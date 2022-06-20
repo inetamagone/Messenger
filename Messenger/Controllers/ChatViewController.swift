@@ -56,6 +56,8 @@ class ChatViewController: MessagesViewController {
     
     public static var dateFormatter = DateFormatter()
     public let otherUserEmail: String
+    private let conversationId: String?
+    
     public var isNewConversation = false
     private var messages = [Message]()
     //private var testSender: Sender?
@@ -64,12 +66,14 @@ class ChatViewController: MessagesViewController {
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
             return nil
         }
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
         return Sender(photoUrl: "",
-                      senderId: email,
-                      displayName: "Joe Smith")
+                      senderId: safeEmail,
+                      displayName: "Me")
     }
     
-    init(with email: String) {
+    init(with email: String, id: String?) {
+        self.conversationId = id
         self.otherUserEmail = email
         super.init(nibName: nil, bundle: nil)
     }
@@ -88,9 +92,39 @@ class ChatViewController: MessagesViewController {
         messageInputBar.delegate = self
     }
     
+    private func listenForMessages(id: String, shouldScrollToBottom: Bool) {
+        DatabaseManager.shared.getAllMessagesOfConversation(with: id, completion: { [ weak self ] result in
+            switch result {
+            case .success(let messages):
+                print("Success in getting messages: \(messages)")
+                guard !messages.isEmpty else {
+                    print("Messages are empty")
+                    return
+                }
+                self?.messages = messages
+                
+                DispatchQueue.main.async {
+                    self?.messagesCollectionView.reloadDataAndKeepOffset()
+                    // Don't scroll down if new message comes
+                    if shouldScrollToBottom {
+                        self?.messagesCollectionView.scrollToBottom()
+                    } else {
+                        
+                    }
+                }
+                
+            case .failure(let error):
+                print("Failed to get messages: \(error)")
+            }
+        })
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageInputBar.inputTextView.becomeFirstResponder()
+        if let conversationId = conversationId {
+            listenForMessages(id: conversationId, shouldScrollToBottom: true)
+        }
     }
     
 }
@@ -101,7 +135,7 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
             return sender
         }
         fatalError("TestSender is nil, email should be cached")
-        return Sender(photoUrl: "", senderId: "123", displayName: "SelfSender")
+        //return Sender(photoUrl: "", senderId: "123", displayName: "SelfSender")
     }
     
     // MessageKit framework uses 'section' instead of usual 'row'
@@ -112,6 +146,7 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messages.count
     }
+    
 }
 
 extension ChatViewController: InputBarAccessoryViewDelegate {
