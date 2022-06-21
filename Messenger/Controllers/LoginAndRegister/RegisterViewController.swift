@@ -20,12 +20,12 @@ class RegisterViewController: UIViewController {
     private let lastNameField = UITextField()
     private let emailField = UITextField()
     private let passwordField = UITextField()
-    private let logInButton = UIButton()
+    private let registerButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        logInButton.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
+        registerButton.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
         
         scrollView.isUserInteractionEnabled = true
         imageView.isUserInteractionEnabled = true
@@ -82,6 +82,9 @@ class RegisterViewController: UIViewController {
                     print("Error creating user")
                     return
                 }
+                
+                UserDefaults.standard.setValue(email, forKey: "email")
+                UserDefaults.standard.setValue("\(firstName) \(lastName)", forKey: "name")
                 
                 let chatUser = ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email)
                 DatabaseManager.shared.insertUser(with: chatUser, completion: { success in
@@ -176,7 +179,7 @@ private extension RegisterViewController {
         verticalStackView.addArrangedSubview(horizontalStackView)
         verticalStackView.addArrangedSubview(emailField)
         verticalStackView.addArrangedSubview(passwordField)
-        verticalStackView.addArrangedSubview(logInButton)
+        verticalStackView.addArrangedSubview(registerButton)
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             verticalStackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 15),
@@ -282,17 +285,17 @@ private extension RegisterViewController {
     }
     
     func setLogInButton() {
-        logInButton.translatesAutoresizingMaskIntoConstraints = false
+        registerButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            logInButton.heightAnchor.constraint(equalToConstant: 52),
-            logInButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -70),
+            registerButton.heightAnchor.constraint(equalToConstant: 52),
+            registerButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -70),
         ])
-        logInButton.setTitle("Register", for: .normal)
-        logInButton.backgroundColor = .purple
-        logInButton.setTitleColor(.white, for: .normal)
-        logInButton.layer.cornerRadius = 12
-        logInButton.layer.masksToBounds = true
-        logInButton.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        registerButton.setTitle("Register", for: .normal)
+        registerButton.backgroundColor = .purple
+        registerButton.setTitleColor(.white, for: .normal)
+        registerButton.layer.cornerRadius = 12
+        registerButton.layer.masksToBounds = true
+        registerButton.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
     }
 }
 

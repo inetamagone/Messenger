@@ -56,7 +56,7 @@ class ChatViewController: MessagesViewController {
     
     public static var dateFormatter = DateFormatter()
     public let otherUserEmail: String
-    private let conversationId: String?
+    private var conversationId: String?
     
     public var isNewConversation = false
     private var messages = [Message]()
@@ -158,23 +158,42 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
             return
         }
         print("Sending \(text)")
+        
+        let message = Message(sender: testSender,
+                              messageId: messageId,
+                              sentDate: Date(),
+                              kind: .text(text))
+        
         // Send message
         if isNewConversation {
             // create conversation in Firebase
-            let message = Message(sender: testSender,
-                                  messageId: messageId,
-                                  sentDate: Date(),
-                                  kind: .text(text))
-            DatabaseManager.shared.createNewConversation(with: otherUserEmail, name: self.title ?? "User", firstMessage: message, completion: { success in
+            DatabaseManager.shared.createNewConversation(with: otherUserEmail, name: self.title ?? "User", firstMessage: message, completion: { [ weak self ] success in
                 if success {
                     print("Message sent")
+                    self?.isNewConversation = false
+                    let newConversationId = "conversation_\(message.messageId)"
+                    self?.conversationId = newConversationId
+                    self?.listenForMessages(id: newConversationId, shouldScrollToBottom: true)
+                    self?.messageInputBar.inputTextView.text = nil
                 } else {
                     print("Failed to send a message")
                 }
             })
         } else {
             // append to existing conversation
+            guard let conversationId = conversationId, let name = self.title else {
+                return
+            }
             
+            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, name: name, newMessage: message, completion: { [weak self] success in
+                if success {
+                    self?.messageInputBar.inputTextView.text = nil
+                    print("message sent")
+                }
+                else {
+                    print("failed to send")
+                }
+            })
         }
     }
     

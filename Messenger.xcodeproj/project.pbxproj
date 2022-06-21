@@ -16,6 +16,7 @@
 		FC7607AA2850C1D200E6923E /* PhotoViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7607A92850C1D200E6923E /* PhotoViewerViewController.swift */; };
 		FC7607AC2850C1F900E6923E /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7607AB2850C1F900E6923E /* NewConversationViewController.swift */; };
 		FC7607AE2850C20C00E6923E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7607AD2850C20C00E6923E /* ProfileViewController.swift */; };
+		FCA8BB022861C8F500791BF6 /* NewConversationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA8BB012861C8F500791BF6 /* NewConversationTableCell.swift */; };
 		FCC7B0D228509E0200640BAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC7B0D128509E0200640BAB /* AppDelegate.swift */; };
 		FCC7B0D428509E0200640BAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC7B0D328509E0200640BAB /* SceneDelegate.swift */; };
 		FCC7B0D628509E0200640BAB /* ConversationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC7B0D528509E0200640BAB /* ConversationsViewController.swift */; };
@@ -37,6 +38,7 @@
 		FC7607A92850C1D200E6923E /* PhotoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerViewController.swift; sourceTree = "<group>"; };
 		FC7607AB2850C1F900E6923E /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
 		FC7607AD2850C20C00E6923E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		FCA8BB012861C8F500791BF6 /* NewConversationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationTableCell.swift; sourceTree = "<group>"; };
 		FCC7B0CE28509E0200640BAB /* Messenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC7B0D128509E0200640BAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCC7B0D328509E0200640BAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				FCC7B0DA28509E1600640BAB /* Assets.xcassets */,
 				FC7607A42850BF3300E6923E /* Storyboards */,
 				FC1C7FFE28587B37005AA13A /* ConversationTableViewCell.swift */,
+				FCA8BB012861C8F500791BF6 /* NewConversationTableCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				FC7607A82850C1B300E6923E /* RegisterViewController.swift in Sources */,
 				FCC7B0D628509E0200640BAB /* ConversationsViewController.swift in Sources */,
 				FCC7B0D228509E0200640BAB /* AppDelegate.swift in Sources */,
+				FCA8BB022861C8F500791BF6 /* NewConversationTableCell.swift in Sources */,
 				FCC7B0D428509E0200640BAB /* SceneDelegate.swift in Sources */,
 				FC7607AE2850C20C00E6923E /* ProfileViewController.swift in Sources */,
 				FC1C7FFF28587B37005AA13A /* ConversationTableViewCell.swift in Sources */,
