@@ -17,6 +17,7 @@
 		FC7607AC2850C1F900E6923E /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7607AB2850C1F900E6923E /* NewConversationViewController.swift */; };
 		FC7607AE2850C20C00E6923E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7607AD2850C20C00E6923E /* ProfileViewController.swift */; };
 		FCA8BB022861C8F500791BF6 /* NewConversationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA8BB012861C8F500791BF6 /* NewConversationTableCell.swift */; };
+		FCA8BB042861F36000791BF6 /* ChatModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA8BB032861F36000791BF6 /* ChatModels.swift */; };
 		FCC7B0D228509E0200640BAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC7B0D128509E0200640BAB /* AppDelegate.swift */; };
 		FCC7B0D428509E0200640BAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC7B0D328509E0200640BAB /* SceneDelegate.swift */; };
 		FCC7B0D628509E0200640BAB /* ConversationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC7B0D528509E0200640BAB /* ConversationsViewController.swift */; };
@@ -39,6 +40,7 @@
 		FC7607AB2850C1F900E6923E /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
 		FC7607AD2850C20C00E6923E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		FCA8BB012861C8F500791BF6 /* NewConversationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationTableCell.swift; sourceTree = "<group>"; };
+		FCA8BB032861F36000791BF6 /* ChatModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModels.swift; sourceTree = "<group>"; };
 		FCC7B0CE28509E0200640BAB /* Messenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC7B0D128509E0200640BAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCC7B0D328509E0200640BAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 		FC7607A12850BEAD00E6923E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FCA8BB032861F36000791BF6 /* ChatModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				FC7607A62850C1A300E6923E /* LoginViewController.swift in Sources */,
 				FC7607AC2850C1F900E6923E /* NewConversationViewController.swift in Sources */,
 				FCD337C02853454100357047 /* StorageManager.swift in Sources */,
+				FCA8BB042861F36000791BF6 /* ChatModels.swift in Sources */,
 				FC7607A82850C1B300E6923E /* RegisterViewController.swift in Sources */,
 				FCC7B0D628509E0200640BAB /* ConversationsViewController.swift in Sources */,
 				FCC7B0D228509E0200640BAB /* AppDelegate.swift in Sources */,

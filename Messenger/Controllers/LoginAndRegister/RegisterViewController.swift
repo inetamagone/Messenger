@@ -27,8 +27,6 @@ class RegisterViewController: UIViewController {
         
         registerButton.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
         
-        scrollView.isUserInteractionEnabled = true
-        imageView.isUserInteractionEnabled = true
         let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapChangeImage))
         imageView.addGestureRecognizer(gesture)
         
@@ -156,6 +154,7 @@ private extension RegisterViewController {
         ])
         //scrollView.backgroundColor = .cyan
         scrollView.clipsToBounds = true
+        scrollView.isUserInteractionEnabled = true
     }
     
     func setImageView() {
@@ -173,6 +172,7 @@ private extension RegisterViewController {
         imageView.layer.borderWidth = 2
         imageView.layer.borderColor = UIColor.gray.cgColor
         imageView.layer.cornerRadius = 50
+        imageView.isUserInteractionEnabled = true
     }
     
     func setVerticalStackView() {
