@@ -39,7 +39,7 @@ class NewConversationViewController: UIViewController {
                                                             action: #selector(dismissConversation))
         // Invoke keyboard on searchBar
         searchBar.becomeFirstResponder()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "newConversationCell")
+        tableView.register(NewConversationTableCell.self, forCellReuseIdentifier: NewConversationTableCell.reuseId)
     }
     
     @objc private func dismissConversation() {

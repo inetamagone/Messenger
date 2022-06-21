@@ -61,8 +61,8 @@ extension NewConversationTableCell {
         NSLayoutConstraint.activate([
             userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             userImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            userImageView.heightAnchor.constraint(equalToConstant: 100),
-            userImageView.widthAnchor.constraint(equalToConstant: 100),
+            userImageView.heightAnchor.constraint(equalToConstant: 70),
+            userImageView.widthAnchor.constraint(equalToConstant: 70),
         ])
         userImageView.contentMode = .scaleAspectFill
         userImageView.layer.cornerRadius = 35
