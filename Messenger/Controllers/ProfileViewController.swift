@@ -38,15 +38,15 @@ class ProfileViewController: UIViewController {
         headerView = setHeaderUI()
         headerView.addSubview(imageView)
         
-        StorageManager.shared.downloadUrl(for: path, completion: { [ weak self ] result in
-            
+        StorageManager.shared.downloadURL(for: path, completion: { result in
             switch result {
             case .success(let url):
-                self?.downloadImage(imageView: (self?.imageView)!, url: url)
+                self.imageView.sd_setImage(with: url, completed: nil)
             case .failure(let error):
                 print("Failed to get download url: \(error)")
             }
         })
+
         return headerView
     }
     
