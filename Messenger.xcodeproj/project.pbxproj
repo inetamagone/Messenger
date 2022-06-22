@@ -18,6 +18,9 @@
 		FC7607AE2850C20C00E6923E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7607AD2850C20C00E6923E /* ProfileViewController.swift */; };
 		FCA8BB022861C8F500791BF6 /* NewConversationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA8BB012861C8F500791BF6 /* NewConversationTableCell.swift */; };
 		FCA8BB042861F36000791BF6 /* ChatModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA8BB032861F36000791BF6 /* ChatModels.swift */; };
+		FCA8BB062862063F00791BF6 /* PofileModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA8BB052862063F00791BF6 /* PofileModels.swift */; };
+		FCA8BB082862069A00791BF6 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA8BB072862069A00791BF6 /* ProfileTableViewCell.swift */; };
+		FCA8BB0A28620D0800791BF6 /* ConversationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA8BB0928620D0800791BF6 /* ConversationModels.swift */; };
 		FCC7B0D228509E0200640BAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC7B0D128509E0200640BAB /* AppDelegate.swift */; };
 		FCC7B0D428509E0200640BAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC7B0D328509E0200640BAB /* SceneDelegate.swift */; };
 		FCC7B0D628509E0200640BAB /* ConversationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC7B0D528509E0200640BAB /* ConversationsViewController.swift */; };
@@ -41,6 +44,9 @@
 		FC7607AD2850C20C00E6923E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		FCA8BB012861C8F500791BF6 /* NewConversationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationTableCell.swift; sourceTree = "<group>"; };
 		FCA8BB032861F36000791BF6 /* ChatModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModels.swift; sourceTree = "<group>"; };
+		FCA8BB052862063F00791BF6 /* PofileModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PofileModels.swift; sourceTree = "<group>"; };
+		FCA8BB072862069A00791BF6 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		FCA8BB0928620D0800791BF6 /* ConversationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationModels.swift; sourceTree = "<group>"; };
 		FCC7B0CE28509E0200640BAB /* Messenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC7B0D128509E0200640BAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCC7B0D328509E0200640BAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				FCA8BB032861F36000791BF6 /* ChatModels.swift */,
+				FCA8BB052862063F00791BF6 /* PofileModels.swift */,
+				FCA8BB0928620D0800791BF6 /* ConversationModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -138,6 +146,7 @@
 			children = (
 				FCC7B0D728509E0200640BAB /* Main.storyboard */,
 				FCC7B0DC28509E1600640BAB /* LaunchScreen.storyboard */,
+				FCA8BB072862069A00791BF6 /* ProfileTableViewCell.swift */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -307,9 +316,12 @@
 				FCC7B0D628509E0200640BAB /* ConversationsViewController.swift in Sources */,
 				FCC7B0D228509E0200640BAB /* AppDelegate.swift in Sources */,
 				FCA8BB022861C8F500791BF6 /* NewConversationTableCell.swift in Sources */,
+				FCA8BB062862063F00791BF6 /* PofileModels.swift in Sources */,
+				FCA8BB082862069A00791BF6 /* ProfileTableViewCell.swift in Sources */,
 				FCC7B0D428509E0200640BAB /* SceneDelegate.swift in Sources */,
 				FC7607AE2850C20C00E6923E /* ProfileViewController.swift in Sources */,
 				FC1C7FFF28587B37005AA13A /* ConversationTableViewCell.swift in Sources */,
+				FCA8BB0A28620D0800791BF6 /* ConversationModels.swift in Sources */,
 				FC7607AA2850C1D200E6923E /* PhotoViewerViewController.swift in Sources */,
 				FCD337BE285328C800357047 /* ChatViewController.swift in Sources */,
 				FC56A8D628522932003E59F8 /* DatabaseManager.swift in Sources */,

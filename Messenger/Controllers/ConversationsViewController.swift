@@ -9,24 +9,6 @@ import UIKit
 import FirebaseAuth
 import JGProgressHUD
 
-struct Conversation {
-    let id: String
-    let name: String
-    let otherUserEmail: String
-    let latestMessage: LatestMessage
-}
-
-struct LatestMessage {
-    let date: String
-    let text: String
-    let isRead: Bool
-}
-
-struct SearchResult {
-    let name: String
-    let email: String
-}
-
 class ConversationsViewController: UIViewController {
 
     private let spinner = JGProgressHUD()
@@ -46,13 +28,27 @@ class ConversationsViewController: UIViewController {
         myTableView.dataSource = self
         startListeningForConversations()
         
-        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
+        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [ weak self ] _ in
             guard let strongSelf = self else {
                 return
             }
 
             strongSelf.startListeningForConversations()
         })
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        validateAuth()
+    }
+    
+    private func validateAuth() {
+        if FirebaseAuth.Auth.auth().currentUser == nil {
+            let vc = LoginViewController()
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: false)
+        }
     }
     
     // Update the tableView when new conversation added
@@ -144,15 +140,6 @@ class ConversationsViewController: UIViewController {
         })
     }
     
-    private func validateAuth() {
-        if FirebaseAuth.Auth.auth().currentUser == nil {
-            let vc = LoginViewController()
-            let nav = UINavigationController(rootViewController: vc)
-            nav.modalPresentationStyle = .fullScreen
-            present(nav, animated: false)
-        }
-    }
-    
 }
 
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -173,7 +160,6 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         let model = conversations[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: ConversationTableViewCell.reuseId,
                                                  for: indexPath) as! ConversationTableViewCell
-//        guard let cell = myTableView.dequeueReusableCell(withIdentifier: ConversationTableViewCell.reuseId, for: indexPath) as? ConversationTableViewCell else {return .init()}
         cell.configure(with: model)
         return cell
     }

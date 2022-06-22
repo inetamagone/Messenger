@@ -77,7 +77,7 @@ class ChatViewController: MessagesViewController {
             
             let picker = UIImagePickerController()
             picker.sourceType = .camera
-            picker.delegate = (self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate)
+            picker.delegate = self!
             picker.allowsEditing = true
             self?.present(picker, animated: true)
             
@@ -86,7 +86,7 @@ class ChatViewController: MessagesViewController {
             
             let picker = UIImagePickerController()
             picker.sourceType = .photoLibrary
-            picker.delegate = (self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate)
+            picker.delegate = self!
             picker.allowsEditing = true
             self?.present(picker, animated: true)
             
