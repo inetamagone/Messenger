@@ -109,6 +109,7 @@
 				FC7607A42850BF3300E6923E /* Storyboards */,
 				FC1C7FFE28587B37005AA13A /* ConversationTableViewCell.swift */,
 				FCA8BB012861C8F500791BF6 /* NewConversationTableCell.swift */,
+				FCA8BB072862069A00791BF6 /* ProfileTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -146,7 +147,6 @@
 			children = (
 				FCC7B0D728509E0200640BAB /* Main.storyboard */,
 				FCC7B0DC28509E1600640BAB /* LaunchScreen.storyboard */,
-				FCA8BB072862069A00791BF6 /* ProfileTableViewCell.swift */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";

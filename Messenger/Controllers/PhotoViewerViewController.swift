@@ -28,12 +28,6 @@ class PhotoViewerViewController: UIViewController {
         setupUI()
         imageView.sd_setImage(with: url, completed: nil)
     }
-
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        imageView.frame = view.bounds
-//    }
-
 }
 
 extension PhotoViewerViewController {

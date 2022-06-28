@@ -53,7 +53,6 @@ class ConversationTableViewCell: UITableViewCell {
 extension ConversationTableViewCell {
     
     func setupUiItems() {
-        //contentView.backgroundColor = .green
         setupImage()
         setupNameLabel()
         setupMessageLabel()
@@ -83,8 +82,6 @@ extension ConversationTableViewCell {
             userNameLabel.widthAnchor.constraint(equalToConstant: 150),
         ])
         userNameLabel.font = .systemFont(ofSize: 21, weight: .semibold)
-        //userNameLabel.text = "Test username"
-        //userNameLabel.backgroundColor = .yellow
     }
     
     func setupMessageLabel() {
@@ -98,7 +95,6 @@ extension ConversationTableViewCell {
         ])
         userMessageLabel.font = .systemFont(ofSize: 19, weight: .regular)
         userMessageLabel.numberOfLines = 0
-        //userMessageLabel.backgroundColor = .gray
     }
     
 }
