@@ -72,7 +72,6 @@ class ConversationsViewController: UIViewController {
                     print("Conversations are empty")
                     return
                 }
-                //print("conversations: \(conversations)")
                 self?.conversations = conversations
                 
                 DispatchQueue.main.async {
@@ -119,7 +118,7 @@ class ConversationsViewController: UIViewController {
         // if it does, reuse conversation id
         // otherwise use existing code
 
-        DatabaseManager.shared.conversationExists(iwth: email, completion: { [ weak self ] result in
+        DatabaseManager.shared.conversationExists(with: email, completion: { [ weak self ] result in
             guard let strongSelf = self else {
                 return
             }
@@ -180,6 +179,29 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // begin delete
+            let conversationId = conversations[indexPath.row].id
+            tableView.beginUpdates()
+            self.conversations.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .left)
+
+            DatabaseManager.shared.deleteConversation(conversationId: conversationId, completion: { success in
+                if !success {
+                    // add model and row back and show error alert
+
+                }
+            })
+
+            tableView.endUpdates()
+        }
+    }
 }
 
 extension ConversationsViewController {
@@ -205,7 +227,6 @@ extension ConversationsViewController {
         ])
         // Don't show if no conversations
         myTableView.isHidden = true
-        //myTableView.backgroundColor = .purple
         myTableView.register(ConversationTableViewCell.self, forCellReuseIdentifier: ConversationTableViewCell.reuseId)
     }
     

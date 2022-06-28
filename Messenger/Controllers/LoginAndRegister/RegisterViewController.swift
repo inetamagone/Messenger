@@ -90,7 +90,7 @@ class RegisterViewController: UIViewController {
                         // upload image
                         guard let image = strongSelf.imageView.image,
                               let data = image.pngData() else {
-                                return
+                            return
                         }
                         let fileName = chatUser.profilePictureFileName
                         StorageManager.shared.uploadProfilePicture(with: data,
@@ -324,10 +324,14 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
     func presentPhotoActionSheet() {
         let actionSheet = UIAlertController(title: "Profile Image", message: "Choose how to add an Image", preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        actionSheet.addAction(UIAlertAction(title: "Take a Photo", style: .default, handler: { [ weak self ] _ in self?.presentCamera()
+        
+        // Can not be tested on simulator, real device only
+        actionSheet.addAction(UIAlertAction(title: "Take a Photo", style: .default, handler: { /*[ weak self]*/  _ in
+            //self?.presentCamera()
             
         }))
-        actionSheet.addAction(UIAlertAction(title: "Choose a Photo", style: .default, handler: {[ weak self ] _ in self?.presentPhotoPicker()
+        actionSheet.addAction(UIAlertAction(title: "Choose a Photo", style: .default, handler: { [ weak self ] _ in
+            self?.presentPhotoPicker()
             
         }))
         present(actionSheet, animated: true)
